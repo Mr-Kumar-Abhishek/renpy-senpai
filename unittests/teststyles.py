@@ -3,7 +3,7 @@ import unittest
 
 import renpy
 renpy.import_all()
-from renpy.styleaccel import Style, StyleManager, build_styles
+from renpy.style import Style, StyleManager, build_styles
 
 
 class TestStyles(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestStyles(unittest.TestCase):
         s.selected_bold = "selected"
         s.selected_hover_bold = "selected_hover"
 
-        renpy.styleaccel.build_style(s)
+        renpy.style.build_style(s)
 
         assert s.bold == "insensitive"
 
