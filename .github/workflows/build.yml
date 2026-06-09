@@ -9,45 +9,84 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: write  # Needed to create a GitHub release and upload assets
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install System Dependencies
+      - name: Install System Dependencies (Linux)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-dev libassimp-dev libavcodec-dev libavformat-dev \
               libswresample-dev libswscale-dev libharfbuzz-dev libfreetype6-dev libfribidi-dev libsdl2-dev \
               libsdl2-image-dev libsdl2-gfx-dev libsdl2-mixer-dev libsdl2-ttf-dev libjpeg-dev pkg-config zip
 
-      - name: Install uv
+      - name: Install MSYS2 & Dependencies (Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          install: >-
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-python
+            mingw-w64-x86_64-python-pip
+            mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-SDL2
+            mingw-w64-x86_64-SDL2_image
+            mingw-w64-x86_64-SDL2_gfx
+            mingw-w64-x86_64-SDL2_mixer
+            mingw-w64-x86_64-SDL2_ttf
+            mingw-w64-x86_64-freetype
+            mingw-w64-x86_64-fribidi
+            mingw-w64-x86_64-harfbuzz
+            mingw-w64-x86_64-ffmpeg
+            mingw-w64-x86_64-assimp
+            zip
+
+      - name: Install uv (Linux)
+        if: runner.os == 'Linux'
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
 
-      - name: Set up Python
+      - name: Set up Python (Linux)
+        if: runner.os == 'Linux'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           
-      - name: Sync dependencies
-        run: uv sync
+      - name: Sync dependencies & Build Modules (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          uv sync
+          uv run ./run.sh --build
 
-      - name: Build Modules
-        run: uv run ./run.sh --build
+      - name: Sync dependencies & Build Modules (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          python3 -m pip install future six pefile requests rsa setuptools cython ruff sphinx sphinx_rtd_theme sphinx_rtd_dark_mode sphinx-tabs jinja2 pkgconfig chardet websockets pysocks
+          ./run.sh --build
 
       - name: Package Artifacts
+        shell: bash
         run: |
-          zip -r renpy-senpai-build.zip . -x "*.git*" -x "tmp/*" -x ".venv/*" -x "*/__pycache__/*"
+          zip -r renpy-senpai-build-${{ runner.os }}.zip . -x "*.git*" -x "tmp/*" -x ".venv/*" -x "*/__pycache__/*"
 
       - name: Upload Artifacts to Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('build-{0}', github.sha) }}
           name: ${{ github.ref_type == 'tag' && format('Release {0}', github.ref_name) || format('Build {0}', github.sha) }}
-          files: renpy-senpai-build.zip
+          files: renpy-senpai-build-${{ runner.os }}.zip
           target_commitish: ${{ github.sha }}
           generate_release_notes: true
