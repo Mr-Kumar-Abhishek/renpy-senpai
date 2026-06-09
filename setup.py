@@ -47,6 +47,9 @@ def main():
     setuplib.extra_compile_args = [ "-Wno-unused-function" ]
     setuplib.extra_link_args = [ ]
 
+    if windows:
+        setuplib.extra_link_args.extend(["-lole32", "-lcomdlg32"])
+
     cubism = os.environ.get("CUBISM", None)
     if cubism:
         setuplib.include_dirs.append("{}/Core/include".format(cubism))
