@@ -68,6 +68,10 @@ jobs:
           uv sync
           uv run ./run.sh --build
 
+      - name: Run Unit Tests (Linux)
+        if: runner.os == 'Linux'
+        run: uv run python -m unittest discover -s unittests
+
       - name: Sync dependencies & Build Modules (Windows)
         if: runner.os == 'Windows'
         shell: msys2 {0}
@@ -76,6 +80,13 @@ jobs:
           source .venv/bin/activate
           python3 -m pip install future six pefile requests rsa setuptools cython ruff sphinx sphinx_rtd_theme sphinx_rtd_dark_mode sphinx-tabs jinja2 pkgconfig chardet websockets pysocks
           ./run.sh --build
+
+      - name: Run Unit Tests (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          source .venv/bin/activate
+          python3 -m unittest discover -s unittests
 
       - name: Package Artifacts
         shell: bash
