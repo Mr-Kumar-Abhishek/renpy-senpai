@@ -90,8 +90,15 @@ jobs:
           source .venv/bin/activate
           python3 -m unittest discover -s unittests
 
-      - name: Package Artifacts
+      - name: Package Artifacts (Linux)
+        if: runner.os == 'Linux'
         shell: bash
+        run: |
+          zip -r renpy-senpai-build-${{ runner.os }}.zip . -x "*.git*" -x "tmp/*" -x ".venv/*" -x "*/__pycache__/*"
+
+      - name: Package Artifacts (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
         run: |
           zip -r renpy-senpai-build-${{ runner.os }}.zip . -x "*.git*" -x "tmp/*" -x ".venv/*" -x "*/__pycache__/*"
 
