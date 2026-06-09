@@ -1,0 +1,133 @@
+Most of Ren'Py is covered by the terms of the following (MIT) license:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Portions of Ren'Py are derived from source code that is licensed under the GNU Lesser General Public License, so Ren'Py games must be distributed in a manner that satisfies the LGPL.
+
+Please see each individual source file for a list of copyright holders. The artwork in the demo is released by various copyright holders, under the same terms.
+
+Ren'Py binaries can include source code from the following projects:
+
+ANGLE (Three clause BSD License)
+
+aom (AOM BSD License, Alliance for Open Media Patent License 1.0)
+
+brotli (MIT License)
+
+bzip2 (Bzip2 License)
+
+certifi (Mozilla Public License 2.0)
+
+chardet (GNU LGPL)
+
+charset-mormalizer (MIT License)
+
+ecdsa (MIT License)
+
+FFmpeg (GNU LGPL) (libav in some older versions, also GNU LGPL)
+
+Freetype (Zlib License)
+
+Fribidi (GNU LGPL)
+
+future (MIT License)
+
+GLEW (Modified BSD, MIT License)
+
+harfbuzz (Old MIT License)
+
+idna (BSD 3-Clause License)
+
+libavif (AOM BSD License)
+
+libffi (MIT License)
+
+libhydrogen (ISC License)
+
+libjpeg-turbo (IJG License, Modified BSD License, Zlib License)
+
+libpng (PNG License)
+
+libusb (GNU LGPL)
+
+libwebp (Modified BSD License, Patent License)
+
+libyuv (Three clause BSD License)
+
+MetalAngle (Three clause BSD License)
+
+Open Asset Import Library (assimp) (Three Clause BSD License)
+
+pefile (MIT License)
+
+py2exe (MIT License)
+
+pyasn1 (Modified BSD License)
+
+Pygame_SDL2 (MIT License, GNU LGPL)
+
+pyjnius (MIT License)
+
+pyobjc (MIT License)
+
+pysocks (Three Clause BSD License)
+
+Python (Python License)
+
+requests (Apache License 2.0)
+
+rsa (Apache License 2.0)
+
+SDL2_image (Zlib License)
+
+SDL2_ttf (Zlib License)
+
+SDL2 (Zlib License)
+
+six (MIT License)
+
+tinyfiledialogs (Zlib License)
+
+urllib3 (MIT License)
+
+urllib3 (MIT License)
+
+websockets (Three Clause BSD License)
+
+xz (Three clause BSD License)
+
+zlib (Zlib License)
+
+zsync (Artistic License)
+
+For the purposes of LGPL compliance, all source code that Ren'Py depends on is located in one of the following repositories:
+
+https://github.com/renpy/renpy (Ren'Py)
+
+https://github.com/renpy/renpy-build (Dependencies)
+
+Ren'Py Build will download source code from other git repositories as needed.
+
+For some releases before Ren'Py 8.5, pygame_sdl2 and web support were separate from Ren'Py.
+
+https://github.com/renpy/pygame_sdl2 (Pygame_SDL2)
+
+https://github.com/renpy/renpyweb (Web)
+
+And for releases before Ren'Py 7.4:
+
+https://github.com/renpy/renpy-deps (Desktop dependencies)
+
+https://github.com/renpy/python-for-android (Android)
+
+https://github.com/renpy/rapt (Android Build Tools)
+
+https://github.com/renpy/renios (iOS)
+
+Although we are unable to provide legal advice, we believe compliance can be achieved by including a copy of this license with every copy of Ren'Py you distribute, and linking to this license from your project's README file or App Store description. We suggest using the wording:
+
+This program contains free software licensed under a number of licenses, including the GNU Lesser General Public License. A complete list of software is available at http://www.renpy.org/doc/html/license.html.
