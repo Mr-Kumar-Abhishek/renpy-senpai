@@ -1,0 +1,53 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - 'releases'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to create a GitHub release and upload assets
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-dev libassimp-dev libavcodec-dev libavformat-dev \
+              libswresample-dev libswscale-dev libharfbuzz-dev libfreetype6-dev libfribidi-dev libsdl2-dev \
+              libsdl2-image-dev libsdl2-gfx-dev libsdl2-mixer-dev libsdl2-ttf-dev libjpeg-dev pkg-config zip
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Build Modules
+        run: uv run ./run.sh --build
+
+      - name: Package Artifacts
+        run: |
+          zip -r renpy-senpai-build.zip . -x "*.git*" -x "tmp/*" -x ".venv/*" -x "*/__pycache__/*"
+
+      - name: Upload Artifacts to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('build-{0}', github.sha) }}
+          name: ${{ github.ref_type == 'tag' && format('Release {0}', github.ref_name) || format('Build {0}', github.sha) }}
+          files: renpy-senpai-build.zip
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true
