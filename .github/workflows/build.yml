@@ -1,11 +1,13 @@
 name: Build Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*'
     branches:
       - 'releases'
+      - 'master'
 
 jobs:
   build:
